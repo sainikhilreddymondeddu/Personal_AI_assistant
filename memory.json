@@ -1,0 +1,250 @@
+{
+  "facts": {
+    "fact_1": "my name",
+    "fact_2": "i mean interested in cyber",
+    "fact_3": "my name",
+    "fact_4": "my name is nikhil",
+    "interest": "cy",
+    "name": "nikhil"
+  },
+  "history": [
+    {
+      "question": "my name is",
+      "answer": "My name is Chatbot, I am here to assist you with any queries or requests you may have. How can I help you today?",
+      "time": "2026-02-02 21:17"
+    },
+    {
+      "question": "what is python",
+      "answer": "Python is a high-level programming language that is widely used for various applications such as web development, data analysis, artificial intelligence, and more. It has a simple and easy-to-read syntax, making it a popular choice among beginners.",
+      "time": "2026-02-02 21:18"
+    },
+    {
+      "question": "remember",
+      "answer": "Sure, I can help you with that! \"Remember\" is a verb that means to store information in your short-term memory for future use. For example, if someone asks you to remember their phone number, you will hold it in your mind temporarily so you can recall it later when needed. If you want to improve your ability to remember things, there are several techniques you can try, such as repetition, visualization, and association with something else that you already know.",
+      "time": "2026-02-02 21:19"
+    },
+    {
+      "question": "what is my name",
+      "answer": "My name is AI Assistant, but you can call me Alex or anything else you prefer. How can I assist you today?",
+      "time": "2026-02-02 21:19"
+    },
+    {
+      "question": "vashikaran",
+      "answer": "Vashika is a Hindu goddess who represents beauty, wisdom, and knowledge. She is often depicted as a beautiful woman with long hair, wearing jewelry and carrying a lotus flower. In many stories, she is portrayed as a teacher or guide to young women, helping them to develop their inner strength and find their true potential. She is also associated with the planet Venus and the month of Ashwin in the Hindu calendar.",
+      "time": "2026-02-02 21:20"
+    },
+    {
+      "question": "Nikhil",
+      "answer": "",
+      "time": "2026-02-02 21:25"
+    },
+    {
+      "question": "North side it is cyber security",
+      "answer": "",
+      "time": "2026-02-02 21:25"
+    },
+    {
+      "question": "CY",
+      "answer": "",
+      "time": "2026-02-02 21:25"
+    },
+    {
+      "question": "remember my interest",
+      "answer": "Sure, I'd be happy to help you with that! Would you like me to add your interests to your profile so I can recommend relevant information in the future? You can also tell me more about what types of information would be most helpful for you to receive.",
+      "time": "2026-02-02 21:26"
+    },
+    {
+      "question": "a purpose ki performance camera on a battery",
+      "answer": "",
+      "time": "2026-02-02 21:26"
+    },
+    {
+      "question": "28",
+      "answer": "",
+      "time": "2026-02-02 21:27"
+    },
+    {
+      "question": "navigate",
+      "answer": "",
+      "time": "2026-02-02 21:27"
+    },
+    {
+      "question": "oneplus",
+      "answer": "",
+      "time": "2026-02-02 21:27"
+    },
+    {
+      "question": "play the",
+      "answer": "I can help you with that! What would you like me to play for you?",
+      "time": "2026-02-02 21:28"
+    },
+    {
+      "question": "what is my interest",
+      "answer": "I'm sorry, but as an AI language model, I do not have access to your interests or preferences. Can you provide me with more information so that I can better assist you?",
+      "time": "2026-02-02 21:28"
+    },
+    {
+      "question": "realme",
+      "answer": "Hi there! How can I assist you today?",
+      "time": "2026-02-02 21:28"
+    }
+  ],
+  "profile": {
+    "name": "nikhil",
+    "preferences": {}
+  },
+  "recent_activity": {
+    "last_opened_site": "youtube",
+    "last_opened_app": "settings"
+  },
+  "conversation_history": [
+    {
+      "time": "2026-02-02 21:53",
+      "user": "what is python",
+      "ai": "AI"
+    },
+    {
+      "time": "2026-02-02 21:54",
+      "user": "Bangalore",
+      "ai": "AI engine is not available."
+    },
+    {
+      "time": "2026-02-03 09:00",
+      "user": "what is python",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:00",
+      "user": "what is python",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:01",
+      "user": "close YouTube",
+      "ai": "Okay, I have successfully closed YouTube. Is there anything else you need help with?"
+    },
+    {
+      "time": "2026-02-03 09:02",
+      "user": "close YouTube",
+      "ai": "I'm sorry, but I can't do that. You need to open the app or website again in order for it to close properly."
+    },
+    {
+      "time": "2026-02-03 09:02",
+      "user": "close",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:03",
+      "user": "close YouTube",
+      "ai": "I'm sorry, but as an AI language model, I do not have access to your computer or internet connection. However, you can try searching for YouTube in your web browser to see if it is available on your system. If you are still having trouble accessing the video player, please let me know and I can provide more guidance."
+    },
+    {
+      "time": "2026-02-03 09:14",
+      "user": "what is my name",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:14",
+      "user": "what is my name",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:14",
+      "user": "what is python",
+      "ai": "Python is a high-level, general-purpose programming language that is widely used for various purposes, including web development, scientific computing, machine learning, and more. It has a simple and easy-to-learn syntax, making it an attractive choice for beginners as well as experienced programmers. Python emphasizes readability and encourages the use of clear and concise code."
+    },
+    {
+      "time": "2026-02-03 09:18",
+      "user": "what is python",
+      "ai": "Python is a high-level, general-purpose programming language that is widely used for web development, data analysis, scientific computing, and more. It has a clean and readable syntax and supports multiple programming paradigms. It also has an extensive library of modules and packages that provide additional functionality."
+    },
+    {
+      "time": "2026-02-03 09:21",
+      "user": "close",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:21",
+      "user": "what you remember",
+      "ai": "I don't have memories like humans do, but i can provide information based on your previous interactions with me."
+    },
+    {
+      "time": "2026-02-03 09:22",
+      "user": "what is AI",
+      "ai": "Artificial Intelligence, often abbreviated as AI, is the development of computer systems that can perform tasks that would typically require human intelligence. This includes functions such as speech recognition, learning, problem-solving, decision making, and more. In short, it's a field that seeks to replicate the ability of the human mind in machines."
+    },
+    {
+      "time": "2026-02-03 09:22",
+      "user": "go home",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:22",
+      "user": "ok thank you bye",
+      "ai": "You're welcome, have a great day!"
+    },
+    {
+      "time": "2026-02-03 09:36",
+      "user": "spotify",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:42",
+      "user": "last",
+      "ai": ""
+    },
+    {
+      "time": "2026-02-03 09:43",
+      "user": "what is python",
+      "ai": "Python is a high-level programming language that is used for a wide variety of applications, from web development and data analysis to artificial intelligence and machine learning. It is known for its readability and ease of use, which makes it popular among both beginners and experienced programmers. Python has a large community of developers who share code, libraries, and resources, making it ea"
+    },
+    {
+      "time": "2026-02-03 10:00",
+      "user": "what is python",
+      "ai": "AI"
+    },
+    {
+      "time": "2026-02-03 10:02",
+      "user": "what is python",
+      "ai": "Python is a programming language that is popular for web development, scientific computing, data analysis, and more. It has a simple and easy-to-read syntax, making it accessible to beginners as well as experienced developers. Many large companies use Python for their products and services, such as Facebook, Netflix, and Spotify."
+    }
+  ],
+  "action_history": [
+    {
+      "time": "2026-02-03 09:01",
+      "action": "open",
+      "target": "youtube",
+      "type": "web"
+    },
+    {
+      "time": "2026-02-03 09:02",
+      "action": "open",
+      "target": "youtube",
+      "type": "web"
+    },
+    {
+      "time": "2026-02-03 09:03",
+      "action": "open",
+      "target": "the site",
+      "type": "app"
+    },
+    {
+      "time": "2026-02-03 09:04",
+      "action": "open",
+      "target": "the site i",
+      "type": "app"
+    },
+    {
+      "time": "2026-02-03 09:04",
+      "action": "open",
+      "target": "the site i useless",
+      "type": "app"
+    },
+    {
+      "time": "2026-02-03 09:04",
+      "action": "open",
+      "target": "the site i",
+      "type": "app"
+    }
+  ]
+}

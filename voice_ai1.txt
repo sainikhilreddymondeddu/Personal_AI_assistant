@@ -1,0 +1,150 @@
+import asyncio
+import os
+import speech_recognition as sr
+import pyttsx3
+
+from playwright.async_api import async_playwright
+
+# =========================
+# TEXT TO SPEECH
+# =========================
+def speak(text):
+    engine = pyttsx3.init()
+    engine.setProperty("rate", 165)
+    print("AI:", text)
+    engine.say(text)
+    engine.runAndWait()
+    engine.stop()
+
+# =========================
+# DESKTOP APP CONTROL
+# =========================
+APP_PROCESSES = {
+    "settings": "SystemSettings.exe",
+    "notepad": "notepad.exe",
+    "calculator": "Calculator.exe",
+    "calc": "Calculator.exe",
+}
+
+def open_desktop_app(app):
+    if app == "settings":
+        os.system("start ms-settings:")
+    elif app in ["calculator", "calc"]:
+        os.system("calc")
+    elif app == "notepad":
+        os.system("notepad")
+
+def close_desktop_app(app):
+    if app in APP_PROCESSES:
+        os.system(f"taskkill /IM {APP_PROCESSES[app]} /F")
+
+# =========================
+# BROWSER CONTROLLER (TAB AWARE)
+# =========================
+WEB_URLS = {
+    "whatsapp": "https://web.whatsapp.com",
+    "spotify": "https://open.spotify.com",
+    "gmail": "https://mail.google.com",
+    "youtube": "https://www.youtube.com",
+}
+
+class BrowserController:
+    def __init__(self):
+        self.browser = None
+        self.context = None
+
+    async def start(self):
+        self.playwright = await async_playwright().start()
+        self.browser = await self.playwright.chromium.launch(headless=False)
+        self.context = await self.browser.new_context()
+
+    async def open_or_focus(self, app):
+        url = WEB_URLS[app]
+
+        # Check existing tabs
+        for page in self.context.pages:
+            if app in page.url:
+                await page.bring_to_front()
+                return
+
+        # Open new tab
+        page = await self.context.new_page()
+        await page.goto(url)
+
+    async def close_tab(self, app):
+        for page in self.context.pages:
+            if app in page.url:
+                await page.close()
+                return
+
+browser = BrowserController()
+
+# =========================
+# COMMAND ROUTER
+# =========================
+async def handle_command(text):
+    cmd = text.lower().strip()
+
+    # OPEN DESKTOP APPS
+    if cmd.startswith("open "):
+        target = cmd.replace("open ", "")
+        if target in APP_PROCESSES:
+            open_desktop_app(target)
+            speak(f"Opening {target}")
+            return
+        if target in WEB_URLS:
+            await browser.open_or_focus(target)
+            speak(f"Opening {target}")
+            return
+
+    # CLOSE DESKTOP APPS
+    if cmd.startswith("close "):
+        target = cmd.replace("close ", "")
+        if target in APP_PROCESSES:
+            close_desktop_app(target)
+            speak(f"Closing {target}")
+            return
+        if target in WEB_URLS:
+            await browser.close_tab(target)
+            speak(f"Closing {target}")
+            return
+
+    if cmd in ["exit", "quit", "stop"]:
+        speak("Goodbye")
+        raise SystemExit
+
+    speak("Command not recognized")
+
+# =========================
+# VOICE LOOP
+# =========================
+async def voice_loop():
+    recognizer = sr.Recognizer()
+    mic = sr.Microphone()
+
+    speak("Voice assistant ready")
+
+    with mic as source:
+        recognizer.adjust_for_ambient_noise(source)
+
+    while True:
+        try:
+            with mic as source:
+                print("Listening...")
+                audio = recognizer.listen(source, phrase_time_limit=6)
+
+            text = recognizer.recognize_google(audio)
+            print("You:", text)
+            await handle_command(text)
+
+        except sr.UnknownValueError:
+            print("Didn't catch that")
+
+# =========================
+# MAIN
+# =========================
+async def main():
+    await browser.start()
+    await voice_loop()
+
+asyncio.run(main())

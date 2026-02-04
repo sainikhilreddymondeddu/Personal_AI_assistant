@@ -1,0 +1,225 @@
+import asyncio
+import os
+import subprocess
+import speech_recognition as sr
+import pyttsx3
+import pyautogui
+from playwright.async_api import async_playwright
+
+# =======================
+# SPEAK
+# =======================
+def speak(text):
+    engine = pyttsx3.init()
+    engine.setProperty("rate", 165)
+    print("AI:", text)
+    engine.say(text)
+    engine.runAndWait()
+    engine.stop()
+
+# =======================
+# DESKTOP APPS (SAFE)
+# =======================
+APP_PROCESSES = {
+    "settings": ["SystemSettings.exe"],
+    "calculator": ["Calculator.exe", "ApplicationFrameHost.exe"],
+    "calc": ["Calculator.exe", "ApplicationFrameHost.exe"],
+    "notepad": ["notepad.exe"],
+}
+
+def open_desktop_app(app):
+    if app == "settings":
+        os.system("start ms-settings:")
+    elif app in ["calculator", "calc"]:
+        os.system("calc")
+    elif app == "notepad":
+        # ✅ FIX: NON-BLOCKING LAUNCH
+        os.system('start "" notepad')
+    elif app in ["file explorer", "explorer"]:
+        os.system("explorer")
+
+def close_desktop_app(app):
+    if app in ["file explorer", "explorer"]:
+        speak("File Explorer cannot be closed safely.")
+        return
+
+    if app not in APP_PROCESSES:
+        speak("That application cannot be closed.")
+        return
+
+    for proc in APP_PROCESSES[app]:
+        os.system(f"taskkill /IM {proc} /F")
+
+# =======================
+# WEB APPS
+# =======================
+WEB_URLS = {
+    "chatgpt": "https://chat.openai.com",
+    "youtube": "https://www.youtube.com",
+    "spotify": "https://open.spotify.com",
+    "whatsapp": "https://web.whatsapp.com",
+    "gemini": "https://gemini.google.com",
+    "linkedin": "https://www.linkedin.com",
+    "gmail": "https://mail.google.com",
+    "nptel": "https://nptel.ac.in",
+    "swayam": "https://swayam.gov.in",
+}
+
+# =======================
+# BROWSER (STABLE MULTI TAB)
+# =======================
+class BrowserController:
+    def __init__(self):
+        self.playwright = None
+        self.context = None
+        self.tabs = {}
+
+    async def start(self):
+        if self.context:
+            return
+        self.playwright = await async_playwright().start()
+        self.context = await self.playwright.chromium.launch_persistent_context(
+            user_data_dir="ai_browser_profile",
+            headless=False
+        )
+        speak("Browser ready")
+
+    async def open_app(self, app):
+        await self.start()
+
+        page = self.tabs.get(app)
+        if page and not page.is_closed():
+            await page.bring_to_front()
+            return
+
+        page = await self.context.new_page()
+        await page.goto(WEB_URLS[app])
+        self.tabs[app] = page
+
+    async def close_app(self, app):
+        page = self.tabs.get(app)
+        if page and not page.is_closed():
+            await page.close()
+        self.tabs.pop(app, None)
+
+    async def close_browser(self):
+        if self.context:
+            await self.context.close()
+            self.context = None
+            self.tabs.clear()
+            speak("Browser closed")
+
+browser = BrowserController()
+
+# =======================
+# AI BRAIN (OLLAMA)
+# =======================
+def ask_ai(question):
+    try:
+        result = subprocess.run(
+            ["ollama", "run", "phi", question],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="ignore",
+            timeout=20
+        )
+        return result.stdout.strip()[:600] or "I could not find an answer."
+    except Exception:
+        return "AI engine is not available."
+
+# =======================
+# NORMALIZATION (CLOSE FIXED)
+# =======================
+def normalize(text):
+    t = text.lower().strip()
+
+    if t.startswith("close "):
+        return t
+
+    if "chat gpt" in t or "chatgpt" in t:
+        return "open chatgpt"
+
+    if "file explorer" in t or t == "explorer":
+        return "open file explorer"
+
+    for app in WEB_URLS:
+        if app in t:
+            return "open " + app
+
+    for app in APP_PROCESSES:
+        if app in t:
+            return "open " + app
+
+    if t in ["home", "desktop", "go home", "go to home"]:
+        return "go home"
+
+    return t
+
+# =======================
+# COMMAND HANDLER
+# =======================
+async def handle_command(text):
+    cmd = normalize(text)
+
+    if cmd in ["exit", "quit", "stop"]:
+        speak("Goodbye")
+        raise SystemExit
+
+    if cmd == "go home":
+        pyautogui.hotkey("win", "d")
+        speak("Desktop")
+        return
+
+    if cmd == "close browser":
+        await browser.close_browser()
+        return
+
+    if cmd.startswith("open "):
+        target = cmd.replace("open ", "")
+        if target in WEB_URLS:
+            await browser.open_app(target)
+            speak(f"Opening {target}")
+            return
+        open_desktop_app(target)
+        speak(f"Opening {target}")
+        return
+
+    if cmd.startswith("close "):
+        target = cmd.replace("close ", "")
+        if target in WEB_URLS:
+            await browser.close_app(target)
+            speak(f"Closing {target}")
+            return
+        close_desktop_app(target)
+        speak(f"Closing {target}")
+        return
+
+    speak(ask_ai(text))
+
+# =======================
+# VOICE LOOP
+# =======================
+async def voice_loop():
+    r = sr.Recognizer()
+    mic = sr.Microphone()
+
+    speak("Voice assistant ready")
+
+    with mic as source:
+        r.adjust_for_ambient_noise(source)
+
+    while True:
+        try:
+            with mic as source:
+                audio = r.listen(source, phrase_time_limit=6)
+            text = r.recognize_google(audio)
+            print("You:", text)
+            await handle_command(text)
+        except sr.UnknownValueError:
+            pass
+
+# =======================
+# MAIN
+# =======================
+asyncio.run(voice_loop())
